@@ -1,7 +1,7 @@
 from alembic import command, config
 from sqlalchemy.ext.asyncio import AsyncConnection, create_async_engine
 
-from settings import get_settings
+from fastapi_async_sqlalchemy.settings import get_settings
 
 engine = create_async_engine(get_settings().database_url, connect_args={"check_same_thread": False}, echo=True)
 

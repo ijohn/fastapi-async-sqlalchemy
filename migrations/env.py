@@ -7,8 +7,8 @@ from alembic import context
 from sqlalchemy import pool
 from sqlalchemy.ext.asyncio import create_async_engine
 
-from models import metadata
-from settings import get_settings
+from fastapi_async_sqlalchemy.models import metadata
+from fastapi_async_sqlalchemy.settings import get_settings
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

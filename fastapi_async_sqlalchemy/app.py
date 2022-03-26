@@ -5,9 +5,9 @@ from fastapi import Depends, FastAPI
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncConnection
 
-from db import get_connection, run_async_migrations
-from models import products
-from schemas import Product, ProductCreate, ProductList, TimestampsMixin
+from fastapi_async_sqlalchemy.db import get_connection, run_async_migrations
+from fastapi_async_sqlalchemy.models import products
+from fastapi_async_sqlalchemy.schemas import Product, ProductCreate, ProductList, TimestampsMixin
 
 app = FastAPI()
 
