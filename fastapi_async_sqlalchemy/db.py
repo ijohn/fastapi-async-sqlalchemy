@@ -1,21 +1,16 @@
 from alembic import command, config
-from sqlalchemy.ext.asyncio import AsyncConnection, create_async_engine
-
-from fastapi_async_sqlalchemy.settings import get_settings
-
-engine = create_async_engine(get_settings().database_url, connect_args={"check_same_thread": False}, echo=True)
+from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 
 
-def run_upgrade(connection, cfg):
+def run_upgrade(connection, cfg) -> None:
     cfg.attributes["connection"] = connection
     command.upgrade(cfg, "head")
 
 
-async def run_async_migrations():
+async def run_async_migrations(engine: AsyncEngine) -> None:
     async with engine.begin() as conn:
         await conn.run_sync(run_upgrade, config.Config("alembic.ini"))
 
 
-async def get_connection() -> AsyncConnection:
-    async with engine.connect() as conn:
-        yield conn
+def create_sa_engine(url: str) -> AsyncEngine:
+    return create_async_engine(url, connect_args={"check_same_thread": False}, echo=True)
