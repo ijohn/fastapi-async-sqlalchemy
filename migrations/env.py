@@ -4,9 +4,11 @@ import asyncio
 from logging.config import fileConfig
 
 from alembic import context
+from sqlalchemy import pool
+from sqlalchemy.ext.asyncio import create_async_engine
 
-from db import DATABASE_URL, engine
 from models import metadata
+from settings import get_settings
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -27,6 +29,7 @@ target_metadata = metadata
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
+url = get_settings().database_url
 
 
 def run_migrations_offline():
@@ -42,7 +45,7 @@ def run_migrations_offline():
 
     """
     context.configure(
-        url=DATABASE_URL,
+        url=url,
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
@@ -59,14 +62,8 @@ def do_run_migrations(connection):
         context.run_migrations()
 
 
-async def run_migrations_online():
-    """Run migrations in 'online' mode.
-
-    In this scenario we need to create an Engine
-    and associate a connection with the context.
-
-    """
-    connectable = engine
+async def run_async_migrations():
+    connectable = create_async_engine(url, poolclass=pool.NullPool, echo=True)
 
     async with connectable.connect() as connection:
         await connection.run_sync(do_run_migrations)
@@ -74,7 +71,22 @@ async def run_migrations_online():
     await connectable.dispose()
 
 
+def run_migrations_online():
+    """Run migrations in 'online' mode.
+
+    In this scenario we need to create an Engine
+    and associate a connection with the context.
+
+    """
+    connectable = config.attributes.get("connection", None)
+
+    if connectable is None:
+        asyncio.run(run_async_migrations())
+    else:
+        do_run_migrations(connectable)
+
+
 if context.is_offline_mode():
     run_migrations_offline()
 else:
-    asyncio.run(run_migrations_online())
+    run_migrations_online()

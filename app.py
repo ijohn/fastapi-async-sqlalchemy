@@ -5,11 +5,16 @@ from fastapi import Depends, FastAPI
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncConnection
 
-from db import get_connection
+from db import get_connection, run_async_migrations
 from models import products
 from schemas import Product, ProductCreate, ProductList, TimestampsMixin
 
 app = FastAPI()
+
+
+@app.on_event("startup")
+async def on_startup():
+    await run_async_migrations()
 
 
 def get_timestamps_dict(dt: datetime) -> dict[str, Any]:  # pylint: disable=invalid-name
