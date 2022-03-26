@@ -5,5 +5,5 @@ engine = create_async_engine(DATABASE_URL, echo=True)
 
 
 async def get_connection() -> AsyncConnection:
-    async with engine.begin() as conn:
+    async with engine.connect() as conn:
         yield conn

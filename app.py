@@ -27,6 +27,7 @@ async def list_products(conn: AsyncConnection = Depends(get_connection)) -> Prod
 async def create_product(product_data: ProductCreate, conn: AsyncConnection = Depends(get_connection)) -> Product:
     query = products.insert()
     insert_result = await conn.execute(query, product_data.dict() | get_timestamps_dict(datetime.utcnow()))
+    await conn.commit()
     select_result = await conn.execute(products.select().where(products.c.id == insert_result.inserted_primary_key[0]))
     new_product_row = select_result.fetchone()
     return Product.parse_obj(new_product_row)
