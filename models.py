@@ -9,4 +9,5 @@ products = Table(
     Column("title", String, nullable=False),
     Column("created_at", DateTime, nullable=False),
     Column("modified_at", DateTime, nullable=False),
+    sqlite_autoincrement=True,
 )
