@@ -19,6 +19,7 @@ omit = [
     "tests/*",
     "migrations/*",
 ]
+concurrency = ["thread", "greenlet"]
 
 [tool.coverage.html]
 directory = "htmlcov"
