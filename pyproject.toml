@@ -31,6 +31,7 @@ non_interactive = true
 namespace_packages = true
 explicit_package_bases = true
 strict = true
+exclude = ["migrations/"]
 
 [tool.pylint.master]
 init-hook = "import sys; sys.path.append(\".\")"
