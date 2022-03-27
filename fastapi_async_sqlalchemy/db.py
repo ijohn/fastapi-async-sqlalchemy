@@ -2,7 +2,7 @@ from alembic import command, config
 from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 
 
-def run_upgrade(connection, cfg) -> None:
+def run_upgrade(connection: AsyncEngine, cfg: config.Config) -> None:
     cfg.attributes["connection"] = connection
     command.upgrade(cfg, "head")
 
