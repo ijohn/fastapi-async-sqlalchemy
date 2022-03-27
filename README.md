@@ -6,4 +6,17 @@
 
 This repository shows a very simple example on how to create an all async project using FastAPI, SQLAlchemy Core (not ORM), and Alembic.
 
-DB migrations are done automatically upon [application start](https://github.com/ijohn/fastapi-async-sqlalchemy/blob/3baa8edf7791e7151a0c2b69bd466061988b62a3/main.py#L18). However, `alembic upgrade head` works perfectly too.
+DB migrations are done automatically upon [application start](https://github.com/ijohn/fastapi-async-sqlalchemy/blob/main/main.py#L18). However, `alembic upgrade head` works perfectly too.
+
+## Play With It
+
+```
+git clone git@github.com:ijohn/fastapi-async-sqlalchemy.git
+cd fastapi-async-sqlalchemy
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+DATABASE_URL='sqlite+aiosqlite:///./main.db' python main.py
+```
+
+Open up your browser and visit `http://localhost:8000/docs`.
