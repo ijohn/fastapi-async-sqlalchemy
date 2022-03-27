@@ -17,6 +17,7 @@ ignore_errors = true
 omit = [
     "*/site-packages/*",
     "tests/*",
+    "migrations/*",
 ]
 
 [tool.coverage.html]
@@ -49,3 +50,6 @@ max-line-length = 120
 
 [tool.pylint.similarities]
 ignore-signatures = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
