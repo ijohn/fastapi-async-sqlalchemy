@@ -25,5 +25,5 @@ async def test_app(app: FastAPI, base_url: str) -> None:
     expected_results = [{"title": "Foo"}, {"title": "Bar"}]
     products_from_response = response.json()["products"]
 
-    for index, product_from_response in enumerate(products_from_response):
-        assert product_from_response["title"] == expected_results[index]["title"]
+    for product_fr_resp, exp_result in zip(products_from_response, expected_results, strict=True):
+        assert product_fr_resp["title"] == exp_result["title"]
