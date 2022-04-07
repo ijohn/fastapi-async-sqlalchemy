@@ -12,10 +12,6 @@ repos:
       - id: detect-private-key
       - id: check-merge-conflict
       # - id: no-commit-to-branch
-  - repo: https://github.com/snok/pep585-upgrade
-    rev: v1.0.1
-    hooks:
-      - id: upgrade-type-hints
   - repo: local
     hooks:
       - id: pyupgrade
