@@ -30,7 +30,7 @@ jobs:
           black .
           flake8 .
           pylint fastapi_async_sqlalchemy
-          mypy --explicit-package-bases --namespace-packages .
+          mypy .
           bandit -r -s B101 -q .
       - name: Run tests
         run: |
