@@ -1,5 +1,5 @@
 aiosqlite==0.18.0
-alembic==1.9.2
+alembic==1.10.2
 fastapi==0.88.0
 SQLAlchemy[asyncio]==2.0.2
 uvicorn==0.20.0
